@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Create Account</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #ffd6d6;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+    .form-container {
+      background-color: #ffd6d6;
+      padding: 30px;
+      border-radius: 10px;
+      text-align: center;
+      width: 400px;
+    }
+    h2 { font-family: "Georgia", serif; font-weight: bold; margin-bottom: 20px; }
+    label { display: block; text-align: left; font-weight: bold; margin: 10px 0 5px; font-family: "Georgia", serif; }
+    input[type="text"], input[type="email"], input[type="password"] {
+      width: 100%; padding: 10px; border: none; border-radius: 15px; background-color: #b3b3b3;
+      margin-bottom: 15px; font-size: 16px;
+    }
+    .show-password { display: flex; align-items: center; margin-bottom: 20px; }
+    .show-password input { margin-right: 10px; }
+    button { width: 100%; padding: 12px; border: none; border-radius: 15px; background-color: #b3b3b3; font-size: 18px; font-family: "Georgia", serif; cursor: pointer; }
+  </style>
+</head>
+<body>
+  <div class="form-container">
+    <h2>CREATE YOUR ACCOUNT</h2>
+    <form id="signupForm">
+      <label for="fname">First name</label>
+      <input type="text" id="fname" name="fname" required>
+      <label for="lname">Last name</label>
+      <input type="text" id="lname" name="lname">
+      <label for="email">Email</label>
+      <input type="email" id="email" name="email" required>
+      <label for="password">Password</label>
+      <input type="password" id="password" name="password" required>
+
+      <div class="show-password">
+        <input type="checkbox" id="showPass" onclick="togglePassword()">
+        <label for="showPass" style="font-weight: normal;">Show password</label>
+      </div>
+
+      <button type="submit">NEXT</button>
+    </form>
+  </div>
+
+  <script>
+    function togglePassword() {
+      const passField = document.getElementById("password");
+      passField.type = passField.type === "password" ? "text" : "password";
+    }
+
+    document.getElementById("signupForm").addEventListener("submit", (e) => {
+      e.preventDefault();
+      const fname = document.getElementById("fname").value;
+      localStorage.setItem("userName", fname);
+      window.location.href = "page2.html";
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Outfit Suggestion</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet" />
+  <style>
+    body {
+      margin: 0;
+      background-color: #ffe6f0;
+      font-family: 'Montserrat', sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    .container {
+      display: flex;
+      background: white;
+      border-radius: 15px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.1);
+      max-width: 900px;
+      width: 90%;
+      padding: 40px;
+      gap: 50px;
+      align-items: center;
+    }
+    .left {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+      flex: 1;
+    }
+    .left button {
+      background-color: #d9d9d9;
+      border: none;
+      color: #000;
+      font-weight: 600;
+      padding: 12px 24px;
+      border-radius: 12px;
+      cursor: pointer;
+      width: 180px;
+      text-align: center;
+      transition: background-color 0.3s;
+    }
+    .left button:hover {
+      background-color: #c0c0c0;
+    }
+    .avatar {
+      width: 260px;
+      height: 260px;
+      border-radius: 50%;
+      object-fit: cover;
+      background-color: #fff;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    .right {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+    }
+    .right h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 32px;
+      font-weight: 700;
+      margin: 0 0 10px 0;
+    }
+    .weather {
+      font-size: 20px;
+      font-style: italic;
+      font-weight: 600;
+      margin-bottom: 30px;
+      color: #555;
+    }
+    .outfit-list {
+      list-style: none;
+      padding-left: 0;
+      font-size: 20px;
+      font-weight: 700;
+      color: #000;
+      line-height: 2.4;
+      margin-bottom: 40px;
+      width: 100%;
+    }
+    .outfit-list li {
+      padding-left: 10px;
+      border-left: 4px solid #ff6f61;
+      margin-bottom: 8px;
+    }
+    .music button {
+      background-color: #d1d1d1;
+      border: none;
+      padding: 14px 28px;
+      border-radius: 30px;
+      font-size: 18px;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+    .music button::before {
+      content: "▶";
+      font-size: 18px;
+    }
+    .music button:hover {
+      background-color: #c0c0c0;
+    }
+    @media (max-width: 720px) {
+      body {
+        height: auto;
+      }
+      .container {
+        flex-direction: column;
+        padding: 30px 20px;
+        max-width: 100%;
+        width: 100%;
+        gap: 30px;
+      }
+      .left, .right {
+        flex: none;
+        width: 100%;
+        align-items: center;
+        text-align: center;
+      }
+      .outfit-list li {
+        border-left: none;
+        padding-left: 0;
+      }
+      .right h2 {
+        font-size: 26px;
+      }
+      .weather {
+        font-size: 16px;
+      }
+      .outfit-list {
+        font-size: 16px;
+      }
+      .music button {
+        width: 100%;
+        justify-content: center;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <div class="left">
+      <button class="save-btn" onclick="saveLook()">save this look!</button>
+      <img class="avatar" src="https://cdn-icons-png.flaticon.com/512/2885/2885430.png" alt="outfit icon" />
+      <button class="try-btn" onclick="tryAnother()">try another look</button>
+    </div>
+
+    <div class="right">
+      <h2>Here's your outfit for today!</h2>
+      <div class="weather" id="weatherInfo"></div>
+      <ul class="outfit-list" id="outfitList"></ul>
+      <div class="music">
+        <button onclick="playMusic()">Listen to: "Soft Lofi Chill Mix"</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const data = JSON.parse(localStorage.getItem("outfitSuggestion")) || {};
+
+    const weatherInfo = document.getElementById("weatherInfo");
+    const outfitList = document.getElementById("outfitList");
+
+    if (data.city && data.temp && data.weather) {
+      weatherInfo.textContent = `(${data.temp}°C, ${data.weather} – ${data.city})`;
+    } else {
+      weatherInfo.textContent = "(Weather info not available)";
+    }
+
+    if (Array.isArray(data.outfit)) {
+      data.outfit.forEach(item => {
+        const li = document.createElement("li");
+        li.textContent = item;
+        outfitList.appendChild(li);
+      });
+    } else {
+      const li = document.createElement("li");
+      li.textContent = "No outfit suggestion found";
+      outfitList.appendChild(li);
+    }
+
+    function saveLook() {
+      alert("Look saved!");
+    }
+
+    function tryAnother() {
+      window.location.href = "page2.html";
+    }
+
+    function playMusic() {
+      window.open("https://www.youtube.com/watch?v=jfKfPfyJRdk", "_blank");
+    }
+  </script>
+</body>
+</html>

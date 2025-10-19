@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Outfit Suggestion</title>
+  <style>
+    body {
+      background-color: #f8c6c6;
+      font-family: 'Georgia', serif;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      min-height: 100vh;
+      padding-top: 50px;
+      margin: 0;
+    }
+    .container { width: 700px; }
+    h2, p { font-style: italic; font-size: 28px; }
+    label { font-weight: bold; font-size: 22px; margin-right: 15px; display: inline-block; min-width: 160px; }
+    input[type="text"], select, button { 
+      background-color: #b5b5b5; 
+      border: none; 
+      border-radius: 25px; 
+      padding: 14px 24px; 
+      margin: 12px 0; 
+      font-size: 20px; 
+      font-style: italic; 
+      cursor: pointer; 
+      min-width: 200px; 
+    }
+    .radio-group { margin: 15px 0; font-size: 20px; }
+    .radio-group input { margin-left: 15px; margin-right: 5px; transform: scale(1.3); }
+    .btn-full { display: block; margin-top: 25px; width: 100%; text-align: center; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Welcome <span id="userName"></span>!</h2>
+    <p>Let’s customize your outfit suggestion today!</p>
+
+    <div>
+      <label>City</label>
+      <input type="text" id="city" placeholder="Enter city">
+    </div>
+
+    <div class="radio-group">
+      <label>Occupation</label>
+      <input type="radio" name="occupation" value="Student"> Student
+      <input type="radio" name="occupation" value="Workman"> Workman
+    </div>
+
+    <div class="radio-group">
+      <label>Gender</label>
+      <input type="radio" name="gender" value="Woman"> Woman
+      <input type="radio" name="gender" value="Man"> Man
+      <input type="radio" name="gender" value="Other"> Other
+    </div>
+
+    <div>
+      <label>Style</label>
+      <select id="style">
+        <option>casual</option>
+        <option>formal</option>
+        <option>sporty</option>
+      </select>
+    </div>
+
+    <div>
+      <label>Skin tone</label>
+      <select id="skinTone">
+        <option>warm</option>
+        <option>cool</option>
+        <option>neutral</option>
+      </select>
+    </div>
+
+    <div>
+      <button onclick="connectCalendar()">connect to my Google Calendar</button>
+    </div>
+
+    <!-- ✅ Bấm nút này là sang trang 3 luôn -->
+    <button class="btn-full" onclick="getOutfit()">Get your outfit suggestion</button>
+  </div>
+
+  <script>
+    document.getElementById("userName").textContent = localStorage.getItem("userName") || "user_name";
+
+    function connectCalendar() {
+      alert("Connecting to Google Calendar... (mock)");
+    }
+
+    function getOutfit() {
+      const city = document.getElementById("city").value || "HCM City";
+      const temp = 32; // mock temperature
+      const weather = "Sunny"; // mock weather
+
+      let outfitItems = [];
+      if (temp < 10) outfitItems = ["Winter Coat", "Scarf", "Boots"];
+      else if (temp < 20) outfitItems = ["Jacket", "Sweater", "Jeans"];
+      else if (temp < 30) outfitItems = ["T-shirt", "Light Jeans", "Sneakers"];
+      else outfitItems = ["Shorts", "Tank Top", "Sandals"];
+
+      // ✅ Lưu dạng JSON thay vì chuỗi HTML
+      const data = {
+        city,
+        temp,
+        weather,
+        outfit: outfitItems
+      };
+
+      localStorage.setItem("outfitSuggestion", JSON.stringify(data));
+      window.location.href = "page3.html";
+    }
+  </script>
+</body>
+</html>
